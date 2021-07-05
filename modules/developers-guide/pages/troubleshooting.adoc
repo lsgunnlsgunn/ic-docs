@@ -1,0 +1,158 @@
+= Troubleshoot issues
+December 2019 (Alpha)
+ifdef::env-github,env-browser[:outfilesuffix:.adoc]
+:proglang: Motoko
+:IC: Internet Computer
+:company-id: DFINITY
+
+This section provides information to help you troubleshoot and resolve or work around common issues that are related to the following tasks:
+
+* downloading and installing the {sdk-short-name}
+* creating, building, or deploying canisters
+* using the `+dfx+` command-line interface
+* running the {IC} network locally in a development environment
+
+include::developers-guide:page$webpack-config.adoc[leveloffset=-1,tag=node]
+
+== Migrating an existing project
+
+Currently, there is no automatic migration or backward compatibility for any projects that you might have created using previous versions of the `+dfx+` command-line interface.
+After upgrading to the latest version, you might see error or failure messages if you attempt to build or install a project created with a previous version of the `+dfx+` command-line interface.
+
+In many cases, however, you can continue to work with projects from a previous release by manually changing the dfx setting in the dfx.json configuration file, then rebuilding the project to be compatible with the version of the `+dfx+` command-line interface you have currently installed.
+
+For example, if you have a project that was created with `+dfx+` version `+0.4.9+`, open the `+dfx.json+` file in a text editor and change the `+dfx+` setting to the latest version or remove the section entirely.
+
+== Restarting the local {IC} network
+
+In some cases, starting the {IC} network locally fails because of replicated state errors. 
+If you encounter issues when running `+dfx start+` to start the local {IC} network:
+
+. In the terminal that displays network operations, press Control-C to interrupt the local network process.
+
+. Stop the {IC} network by running the following command:
++
+[source,bash]
+----
+dfx stop
+----
+. Restart the {IC} in a clean state by running the following command:
++
+[source,bash]
+----
+dfx start --clean
+----
++
+The `+--clean+` option removes checkpoints and stale state information from your project's cache so that you can restart the {IC} replica and web server processes in a clean state.
+
+Keep in mind, however, that if you reset the state information by running `+dfx start --clean+`, your existing canisters are also removed. 
+
+After running `+dfx start --clean+`, recreate your canisters by running the following commands:
+
+[source,bash]
+----
+dfx canister create --all
+dfx build
+dfx canister install --all
+----
+
+== Removing the canisters directory
+
+If you run into problems building or deploying canisters after successfully connecting to the {IC} and registering canister identifiers, you should remove the `+canisters+` directory before attempting to rebuild or redeploy the canisters. 
+
+You can remove the `+canisters+` directory for a project by running the following command in the project's root directory:
+
+[source,bash]
+----
+rm -rf ./.dfx/* canisters/*
+----
+
+== Reinstalling dfx
+
+Many of the bugs you might encounter can be addressed by uninstalling and reinstalling the `+dfx+` command-line interface.
+Here are a few ways to reinstall `+dfx+`.
+
+If you only have one version of `+dfx+` installed in your development environment, you can usually run the following command to uninstall and reinstall the latest version of `+dfx+`:
+
+[source,bash]
+----
+~/.cache/dfinity/uninstall.sh && sh -ci "$(curl -sSL https://sdk.dfinity.org/install.sh)"
+----
+
+If you have modified the location of the `+dfx+` binary, you might want run the following command to uninstall the version of `+dfx+` that is in your PATH, then reinstall the latest version of `+dfx+`:
+
+[source,bash]
+----
+rm -rf ~/.cache/dfinity && rm $(which dfx) && sh -ci "$(curl -sSL https://sdk.dfinity.org/install.sh)"
+----
+
+== Xcode prerequisite
+
+Some versions of the {sdk-short-name} prompted you to install Xcode when creating a new project on a macOS computer.
+The prompt has been removed and the `+dfx new+` command does not require you to install any macOS developer tools.
+However, you should have Developer Command Line Tools installed if you want to create a Git repository for your project.
+
+You can check whether you have the developer tools installed by running `+xcode-select -p+`.
+You can install the developer tools by running `+xcode-select --install+`.
+
+== Failed build when using VMs
+
+If you are running `+dfx+` using a virtual machine image on Ubuntu or CentOS, you might see an error message that looks like this when you attempt to run the `+dfx build+` command:
+
+[source,bash]
+-----
+Building hello...
+An error occurred:
+Io(
+    Os {
+        code: 2,
+        kind: NotFound,
+        message: "No such file or directory",
+    },
+)
+-----
+
+== Address in use error or orphan processes
+
+If you are developing projects locally, you often have a local version of core {IC} processes—collectively referred to as the `+replica+`—running either is a separate terminal or in the background.
+If the running {IC} processes do not get properly terminated, you might see operating system errors indicating that an address is already in use or or be unable to stop processes normally using the `+dfx stop+` command.
+
+There are several scenarios in which you might encounter this issue. For example, if you run `+dfx start+` in a local project directory then change to a different local project directory without first stopping {IC} processes, you might see this issue.
+
+If you encounter an issue where you suspect or you receive a message that an address is already in use or that a process is already running in the background, perform the following steps:
+
+. Run the following command to see which process is listening to the 8000 port if you are using the default local network binding:
++
+[source,bash]
+----
+lsof -i tcp:8000
+----
+. Run the following command to terminate any orphan processes:
++
+[source,bash]
+----
+killall dfx replica
+----
+. Close the current terminal and open a new terminal window.
+. In the new terminal, run the following command to run the local {IC} in a clean state:
++
+[source,bash]
+----
+dfx start --clean --background
+----
+
+== Memory leak
+
+Fixing memory leaks is an ongoing process. If you encounter any error messages related to memory leaks, you should do the following:
+
+. Run `+dfx stop+` to stop currently running processes.
+. Uninstall `+dfx+` to prevent further degradation.
+. Re-install `+dfx+`
+. Run `+dfx start+` to restart replica processes.
+
+Alternatively, you can remove the `+.cache/dfinity+` directory and re-install the latest `+dfx+` binary.
+For example:
+[source,bash]
+----
+rm -rf ~/.cache/dfinity && sh -ci "$(curl -sSL https://sdk.dfinity.org/install.sh)"
+----
