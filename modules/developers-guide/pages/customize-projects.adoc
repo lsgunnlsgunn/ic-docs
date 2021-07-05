@@ -1,0 +1,116 @@
+= Manage projects
+:proglang: Motoko
+:platform: Internet Computer platform
+:IC: Internet Computer
+:company-id: DFINITY
+
+You can modify some key settings for individual projects by modifying each project’s `+dfx.json+` configuration file. 
+You can use the `+dfx config+` command to change these settings programmatically or manually edit the `+dfx.json+` file directly.
+
+== How to change your source directory
+
+Before you compile source code for your project using the `+dfx build+` command, you might want to check the default location for storing the source code for your program.
+By default, the name you use to create a new project is the name used for one data smart contract canister (`+canister_name+`) and one assets canister (`+canister_name_assets+`), and program source code is expected to be in the `+src/canister_name+` directory. Similarly, the default location for front-end source code is in the `+src/canister_name_assets/src+` directory and front-end output is located in the `+dist/canister_name_assets+` directory.
+
+Depending on your application's complexity and architecture, however, you might want to modify the default location for the program source code, the front-end source code, or front-end output. 
+
+For example, for a simple program, you might want to eliminate one directory level and place the source code in the `+src+` directory:
+
+[source,text]
+----
+  "main": "src/main.mo",
+----
+
+For more complex applications, you might want to use a multi-tiered directory structure:
+
+[source,text]
+----
+"canisters": {
+  "profiles": {
+    "main": "src/profiles/utils/main.mo"
+  },
+  "events": {
+    "main": "src/events/calendar/main.mo"
+  },
+  "media": {
+    "main": "src/events/reports/main.mo"
+  }
+}
+----
+
+NOTE: If you modify the default settings for a source code directory, be sure that the settings in the `+dfx.json+` configuration file match the directory location on the file system.
+
+////
+== How to change your output directory
+
+When you compile source code for your project using the `+dfx build+` command, the command automatically generates a WebAssembly executable and interface bindings in a default output folder. 
+You can customize the default output folder for a project by modifying the project’s local `+dfx.json+` configuration file. 
+You can change settings in the `+dfx.json+` configuration file manually by editing the file or programmatically by running the `+dfx config+` command.
+
+To see the default output folder you are currently using, run the following command:
+
+[source,bash]
+----
+dfx config defaults.build.output
+----
+
+The command returns the setting you have currently defined in the `+dfx.json+` configuration file. 
+For example:
+
+[source,bash]
+----
+"canisters/"
+----
+
+To change the default output folder, run the `+dfx config+` command and specify a new location. 
+For example, to change the default output directory from `+canisters+` to `+ready_for_release+`, run the following command:
+
+[source,bash]
+----
+dfx config defaults.build.output ready_for_release
+----
+
+This command changes the `+output+` setting in the `+dfx.json+` configuration file to `+ready_for_release+`.
+
+For example:
+
+[source,json]
+----
+  "defaults": {
+    "build": {
+      "output": "ready_for_release"
+----
+////
+
+== How to change the main program file name
+
+Before you compile source code for your project using the `+dfx build+` command, you should verify the location and file name used for your program’s source code.
+
+For example, if you want to build a smart contract canister for the `+factorial+` program and the source code for the program is located in `+src/math/factorial.mo+`, you should be sure that you have the correct
+path specified for the `+main+` setting in the `+canisters+` section of the configuration file.
+
+For example:
+
+[source,json]
+----
+"main": "src/math/factorial.mo",
+----
+
+Keep in mind that changing the configuration setting for the program file name only affects where the `+dfx build+` command looks for the source code to compile. Making changes in the configuration file does not rename any files or directories on the file system. 
+If you change the path to the main program file or the name of the file itself, be sure to change the name and location within your project directory.
+
+== How to change the location for serving the application front-end
+
+You can change the default host name and port number for serving the application front-end by modifying the local network settings in the `+dfx.json+` configuration file.
+
+For example, you can change the IP address for the local network by modifying the `+bind+` setting:
+
+[source,json]
+----
+"networks": {
+  "local": {
+    "bind": "192.168.47.1:8000",
+    "type": "ephemeral"
+  }
+}
+----

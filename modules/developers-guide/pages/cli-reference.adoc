@@ -1,0 +1,45 @@
+= Command-line reference
+ifdef::env-github,env-browser[:outfilesuffix:.adoc]
+:toc:
+:toc: right
+:toc-title: COMMAND REFERENCE
+:toclevels: 1
+:proglang: Motoko
+:platform: Internet Computer platform
+:IC: Internet Computer
+:company-id: DFINITY
+
+The DFINITY command-line execution environment (`+dfx+`) is the primary tool for creating, deploying, and managing the applications you develop for the {platform}.
+
+You can use the `+dfx+` parent command with different flags and subcommands to perform different types of operations.
+
+The basic syntax for running `+dfx+` commands is:
+
+[source,bash]
+----
+dfx [option] [subcommand] [flag]
+----
+
+Depending on the subcommand, the options and flags you specify might apply to the parent command or to a specific subcommand.
+For example, the flags for enabling or suppressing verbose logging are specified for the `+dfx+` parent command, then applied to any subcommands. 
+
+When you have the {sdk-short-name} installed, you can use the following commands to specify the operation you want to perform.
+For reference information and examples that illustrate using these commands, select an appropriate command.
+
+* link:cli-reference/dfx-parent{outfilesuffix}[dfx]
+* link:cli-reference/dfx-bootstrap{outfilesuffix}[dfx bootstrap]
+* link:cli-reference/dfx-build{outfilesuffix}[dfx build]
+* link:cli-reference/dfx-cache{outfilesuffix}[dfx cache]
+* link:cli-reference/dfx-canister{outfilesuffix}[dfx canister]
+* link:cli-reference/dfx-config{outfilesuffix}[dfx config]
+* link:cli-reference/dfx-deploy{outfilesuffix}[dfx deploy]
+* link:cli-reference/dfx-help{outfilesuffix}[dfx help]
+* link:cli-reference/dfx-identity{outfilesuffix}[dfx identity]
+* link:cli-reference/dfx-ledger{outfilesuffix}[dfx ledger]
+* link:cli-reference/dfx-new{outfilesuffix}[dfx new]
+* link:cli-reference/dfx-ping{outfilesuffix}[dfx ping]
+* link:cli-reference/dfx-replica{outfilesuffix}[dfx replica]
+* link:cli-reference/dfx-start{outfilesuffix}[dfx start]
+* link:cli-reference/dfx-stop{outfilesuffix}[dfx stop]
+* link:cli-reference/dfx-upgrade{outfilesuffix}[dfx upgrade]
+* link:cli-reference/dfx-wallet{outfilesuffix}[dfx wallet]
