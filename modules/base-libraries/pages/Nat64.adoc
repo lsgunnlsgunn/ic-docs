@@ -1,0 +1,399 @@
+[[module.Nat64]]
+= Nat64
+
+64-bit unsigned integers with checked arithmetic
+
+Most operations are available as built-in operators (e.g. `1 + 1`).
+
+[[type.Nat64]]
+== Nat64
+
+[source.no-repl,motoko,subs=+macros]
+----
+type Nat64 = Prim.Types.Nat64
+----
+
+64-bit natural numbers.
+
+[[toNat]]
+== toNat
+
+[source.no-repl,motoko,subs=+macros]
+----
+let toNat : xref:#type.Nat64[Nat64] -> Nat
+----
+
+Conversion.
+
+[[fromNat]]
+== fromNat
+
+[source.no-repl,motoko,subs=+macros]
+----
+let fromNat : Nat -> xref:#type.Nat64[Nat64]
+----
+
+Conversion. Traps on overflow/underflow.
+
+[[fromIntWrap]]
+== fromIntWrap
+
+[source.no-repl,motoko,subs=+macros]
+----
+let fromIntWrap : Int -> xref:#type.Nat64[Nat64]
+----
+
+Conversion. Wraps on overflow/underflow.
+
+[[toText]]
+== toText
+
+[source.no-repl,motoko,subs=+macros]
+----
+func toText(x : xref:#type.Nat64[Nat64]) : Text
+----
+
+Returns the Text representation of `x`.
+
+[[min]]
+== min
+
+[source.no-repl,motoko,subs=+macros]
+----
+func min(x : xref:#type.Nat64[Nat64], y : xref:#type.Nat64[Nat64]) : xref:#type.Nat64[Nat64]
+----
+
+Returns the minimum of `x` and `y`.
+
+[[max]]
+== max
+
+[source.no-repl,motoko,subs=+macros]
+----
+func max(x : xref:#type.Nat64[Nat64], y : xref:#type.Nat64[Nat64]) : xref:#type.Nat64[Nat64]
+----
+
+Returns the maximum of `x` and `y`.
+
+[[equal]]
+== equal
+
+[source.no-repl,motoko,subs=+macros]
+----
+func equal(x : xref:#type.Nat64[Nat64], y : xref:#type.Nat64[Nat64]) : Bool
+----
+
+Returns `x == y`.
+
+[[notEqual]]
+== notEqual
+
+[source.no-repl,motoko,subs=+macros]
+----
+func notEqual(x : xref:#type.Nat64[Nat64], y : xref:#type.Nat64[Nat64]) : Bool
+----
+
+Returns `x != y`.
+
+[[less]]
+== less
+
+[source.no-repl,motoko,subs=+macros]
+----
+func less(x : xref:#type.Nat64[Nat64], y : xref:#type.Nat64[Nat64]) : Bool
+----
+
+Returns `x < y`.
+
+[[lessOrEqual]]
+== lessOrEqual
+
+[source.no-repl,motoko,subs=+macros]
+----
+func lessOrEqual(x : xref:#type.Nat64[Nat64], y : xref:#type.Nat64[Nat64]) : Bool
+----
+
+Returns `x <= y`.
+
+[[greater]]
+== greater
+
+[source.no-repl,motoko,subs=+macros]
+----
+func greater(x : xref:#type.Nat64[Nat64], y : xref:#type.Nat64[Nat64]) : Bool
+----
+
+Returns `x > y`.
+
+[[greaterOrEqual]]
+== greaterOrEqual
+
+[source.no-repl,motoko,subs=+macros]
+----
+func greaterOrEqual(x : xref:#type.Nat64[Nat64], y : xref:#type.Nat64[Nat64]) : Bool
+----
+
+Returns `x >= y`.
+
+[[compare]]
+== compare
+
+[source.no-repl,motoko,subs=+macros]
+----
+func compare(x : xref:#type.Nat64[Nat64], y : xref:#type.Nat64[Nat64]) : {#less; #equal; #greater}
+----
+
+Returns the order of `x` and `y`.
+
+[[add]]
+== add
+
+[source.no-repl,motoko,subs=+macros]
+----
+func add(x : xref:#type.Nat64[Nat64], y : xref:#type.Nat64[Nat64]) : xref:#type.Nat64[Nat64]
+----
+
+Returns the sum of `x` and `y`, `x + y`. Traps on overflow.
+
+[[sub]]
+== sub
+
+[source.no-repl,motoko,subs=+macros]
+----
+func sub(x : xref:#type.Nat64[Nat64], y : xref:#type.Nat64[Nat64]) : xref:#type.Nat64[Nat64]
+----
+
+Returns the difference of `x` and `y`, `x - y`. Traps on underflow.
+
+[[mul]]
+== mul
+
+[source.no-repl,motoko,subs=+macros]
+----
+func mul(x : xref:#type.Nat64[Nat64], y : xref:#type.Nat64[Nat64]) : xref:#type.Nat64[Nat64]
+----
+
+Returns the product of `x` and `y`, `x * y`. Traps on overflow.
+
+[[div]]
+== div
+
+[source.no-repl,motoko,subs=+macros]
+----
+func div(x : xref:#type.Nat64[Nat64], y : xref:#type.Nat64[Nat64]) : xref:#type.Nat64[Nat64]
+----
+
+Returns the division of `x by y`, `x / y`.
+Traps when `y` is zero.
+
+[[rem]]
+== rem
+
+[source.no-repl,motoko,subs=+macros]
+----
+func rem(x : xref:#type.Nat64[Nat64], y : xref:#type.Nat64[Nat64]) : xref:#type.Nat64[Nat64]
+----
+
+Returns the remainder of `x` divided by `y`, `x % y`.
+Traps when `y` is zero.
+
+[[pow]]
+== pow
+
+[source.no-repl,motoko,subs=+macros]
+----
+func pow(x : xref:#type.Nat64[Nat64], y : xref:#type.Nat64[Nat64]) : xref:#type.Nat64[Nat64]
+----
+
+Returns `x` to the power of `y`, `x ** y`. Traps on overflow.
+
+[[bitnot]]
+== bitnot
+
+[source.no-repl,motoko,subs=+macros]
+----
+func bitnot(x : xref:#type.Nat64[Nat64], y : xref:#type.Nat64[Nat64]) : xref:#type.Nat64[Nat64]
+----
+
+Returns the bitwise negation of `x`, `^x`.
+
+[[bitand]]
+== bitand
+
+[source.no-repl,motoko,subs=+macros]
+----
+func bitand(x : xref:#type.Nat64[Nat64], y : xref:#type.Nat64[Nat64]) : xref:#type.Nat64[Nat64]
+----
+
+Returns the bitwise and of `x` and `y`, `x & y`.
+
+[[bitor]]
+== bitor
+
+[source.no-repl,motoko,subs=+macros]
+----
+func bitor(x : xref:#type.Nat64[Nat64], y : xref:#type.Nat64[Nat64]) : xref:#type.Nat64[Nat64]
+----
+
+Returns the bitwise or of `x` and `y`, `x \| y`.
+
+[[bitxor]]
+== bitxor
+
+[source.no-repl,motoko,subs=+macros]
+----
+func bitxor(x : xref:#type.Nat64[Nat64], y : xref:#type.Nat64[Nat64]) : xref:#type.Nat64[Nat64]
+----
+
+Returns the bitwise exclusive or of `x` and `y`, `x ^ y`.
+
+[[bitshiftLeft]]
+== bitshiftLeft
+
+[source.no-repl,motoko,subs=+macros]
+----
+func bitshiftLeft(x : xref:#type.Nat64[Nat64], y : xref:#type.Nat64[Nat64]) : xref:#type.Nat64[Nat64]
+----
+
+Returns the bitwise shift left of `x` by `y`, `x << y`.
+
+[[bitshiftRight]]
+== bitshiftRight
+
+[source.no-repl,motoko,subs=+macros]
+----
+func bitshiftRight(x : xref:#type.Nat64[Nat64], y : xref:#type.Nat64[Nat64]) : xref:#type.Nat64[Nat64]
+----
+
+Returns the bitwise shift right of `x` by `y`, `x >> y`.
+
+[[bitrotLeft]]
+== bitrotLeft
+
+[source.no-repl,motoko,subs=+macros]
+----
+func bitrotLeft(x : xref:#type.Nat64[Nat64], y : xref:#type.Nat64[Nat64]) : xref:#type.Nat64[Nat64]
+----
+
+Returns the bitwise rotate left of `x` by `y`, `x <<> y`.
+
+[[bitrotRight]]
+== bitrotRight
+
+[source.no-repl,motoko,subs=+macros]
+----
+func bitrotRight(x : xref:#type.Nat64[Nat64], y : xref:#type.Nat64[Nat64]) : xref:#type.Nat64[Nat64]
+----
+
+Returns the bitwise rotate right of `x` by `y`, `x <>> y`.
+
+[[bittest]]
+== bittest
+
+[source.no-repl,motoko,subs=+macros]
+----
+func bittest(x : xref:#type.Nat64[Nat64], p : Nat) : Bool
+----
+
+Returns the value of bit `p mod 64` in `x`, `(x & 2^(p mod 64)) == 2^(p mod 64)`.
+
+[[bitset]]
+== bitset
+
+[source.no-repl,motoko,subs=+macros]
+----
+func bitset(x : xref:#type.Nat64[Nat64], p : Nat) : xref:#type.Nat64[Nat64]
+----
+
+Returns the value of setting bit `p mod 64` in `x` to `1`.
+
+[[bitclear]]
+== bitclear
+
+[source.no-repl,motoko,subs=+macros]
+----
+func bitclear(x : xref:#type.Nat64[Nat64], p : Nat) : xref:#type.Nat64[Nat64]
+----
+
+Returns the value of clearing bit `p mod 64` in `x` to `0`.
+
+[[bitflip]]
+== bitflip
+
+[source.no-repl,motoko,subs=+macros]
+----
+func bitflip(x : xref:#type.Nat64[Nat64], p : Nat) : xref:#type.Nat64[Nat64]
+----
+
+Returns the value of flipping bit `p mod 64` in `x`.
+
+[[bitcountNonZero]]
+== bitcountNonZero
+
+[source.no-repl,motoko,subs=+macros]
+----
+let bitcountNonZero : (x : xref:#type.Nat64[Nat64]) -> xref:#type.Nat64[Nat64]
+----
+
+Returns the count of non-zero bits in `x`.
+
+[[bitcountLeadingZero]]
+== bitcountLeadingZero
+
+[source.no-repl,motoko,subs=+macros]
+----
+let bitcountLeadingZero : (x : xref:#type.Nat64[Nat64]) -> xref:#type.Nat64[Nat64]
+----
+
+Returns the count of leading zero bits in `x`.
+
+[[bitcountTrailingZero]]
+== bitcountTrailingZero
+
+[source.no-repl,motoko,subs=+macros]
+----
+let bitcountTrailingZero : (x : xref:#type.Nat64[Nat64]) -> xref:#type.Nat64[Nat64]
+----
+
+Returns the count of trailing zero bits in `x`.
+
+[[addWrap]]
+== addWrap
+
+[source.no-repl,motoko,subs=+macros]
+----
+func addWrap(x : xref:#type.Nat64[Nat64], y : xref:#type.Nat64[Nat64]) : xref:#type.Nat64[Nat64]
+----
+
+Returns the sum of `x` and `y`, `x +% y`. Wraps on overflow.
+
+[[subWrap]]
+== subWrap
+
+[source.no-repl,motoko,subs=+macros]
+----
+func subWrap(x : xref:#type.Nat64[Nat64], y : xref:#type.Nat64[Nat64]) : xref:#type.Nat64[Nat64]
+----
+
+Returns the difference of `x` and `y`, `x -% y`. Wraps on underflow.
+
+[[mulWrap]]
+== mulWrap
+
+[source.no-repl,motoko,subs=+macros]
+----
+func mulWrap(x : xref:#type.Nat64[Nat64], y : xref:#type.Nat64[Nat64]) : xref:#type.Nat64[Nat64]
+----
+
+Returns the product of `x` and `y`, `x *% y`. Wraps on overflow.
+
+[[powWrap]]
+== powWrap
+
+[source.no-repl,motoko,subs=+macros]
+----
+func powWrap(x : xref:#type.Nat64[Nat64], y : xref:#type.Nat64[Nat64]) : xref:#type.Nat64[Nat64]
+----
+
+Returns `x` to the power of `y`, `x **% y`. Wraps on overflow.
+

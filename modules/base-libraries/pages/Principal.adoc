@@ -1,0 +1,136 @@
+[[module.Principal]]
+= Principal
+
+IC principals (User and canister IDs)
+
+[[type.Principal]]
+== Principal
+
+[source.no-repl,motoko,subs=+macros]
+----
+type Principal = Prim.Types.Principal
+----
+
+Internet Computer principal identifiers.
+Convert to `Blob` for access to bytes.
+
+[[fromActor]]
+== fromActor
+
+[source.no-repl,motoko,subs=+macros]
+----
+let fromActor : (a : actor {  }) -> xref:#type.Principal[Principal]
+----
+
+Conversion.
+
+[[toBlob]]
+== toBlob
+
+[source.no-repl,motoko,subs=+macros]
+----
+let toBlob : (p : xref:#type.Principal[Principal]) -> Blob
+----
+
+Conversion.
+
+[[toText]]
+== toText
+
+[source.no-repl,motoko,subs=+macros]
+----
+func toText(p : xref:#type.Principal[Principal]) : Text
+----
+
+Conversion.
+
+[[hash]]
+== hash
+
+[source.no-repl,motoko,subs=+macros]
+----
+func hash(principal : xref:#type.Principal[Principal]) : xref:Hash.adoc#type.Hash[Hash.Hash]
+----
+
+
+
+[[fromText]]
+== fromText
+
+[source.no-repl,motoko,subs=+macros]
+----
+func fromText(t : Text) : xref:#type.Principal[Principal]
+----
+
+
+
+[[equal]]
+== equal
+
+[source.no-repl,motoko,subs=+macros]
+----
+func equal(x : xref:#type.Principal[Principal], y : xref:#type.Principal[Principal]) : Bool
+----
+
+Returns `x == y`.
+
+[[notEqual]]
+== notEqual
+
+[source.no-repl,motoko,subs=+macros]
+----
+func notEqual(x : xref:#type.Principal[Principal], y : xref:#type.Principal[Principal]) : Bool
+----
+
+Returns `x != y`.
+
+[[less]]
+== less
+
+[source.no-repl,motoko,subs=+macros]
+----
+func less(x : xref:#type.Principal[Principal], y : xref:#type.Principal[Principal]) : Bool
+----
+
+Returns `x < y`.
+
+[[lessOrEqual]]
+== lessOrEqual
+
+[source.no-repl,motoko,subs=+macros]
+----
+func lessOrEqual(x : xref:#type.Principal[Principal], y : xref:#type.Principal[Principal]) : Bool
+----
+
+Returns `x <= y`.
+
+[[greater]]
+== greater
+
+[source.no-repl,motoko,subs=+macros]
+----
+func greater(x : xref:#type.Principal[Principal], y : xref:#type.Principal[Principal]) : Bool
+----
+
+Returns `x > y`.
+
+[[greaterOrEqual]]
+== greaterOrEqual
+
+[source.no-repl,motoko,subs=+macros]
+----
+func greaterOrEqual(x : xref:#type.Principal[Principal], y : xref:#type.Principal[Principal]) : Bool
+----
+
+Returns `x >= y`.
+
+[[compare]]
+== compare
+
+[source.no-repl,motoko,subs=+macros]
+----
+func compare(x : xref:#type.Principal[Principal], y : xref:#type.Principal[Principal]) : {#less; #equal; #greater}
+----
+
+Returns the order of `x` and `y`.
+

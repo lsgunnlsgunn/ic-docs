@@ -1,0 +1,17 @@
+[[module.Debug]]
+= Debug
+
+Debugging aids
+
+[[print]]
+== print
+
+[source.no-repl,motoko,subs=+macros]
+----
+let print : Text -> ()
+----
+
+`print(t)` emits text `t` to the debug output stream.
+How this stream is stored or displayed depends on the
+execution environment.
+

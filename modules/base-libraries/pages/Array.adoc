@@ -1,0 +1,258 @@
+[[module.Array]]
+= Array
+
+Functions on Arrays
+
+[[equal]]
+== equal
+
+[source.no-repl,motoko,subs=+macros]
+----
+func equal<A>(a : pass:[[]Apass:[]], b : pass:[[]Apass:[]], eq : (A, A) -> Bool) : Bool
+----
+
+Test if two arrays contain equal values
+
+[[append]]
+== append
+
+[source.no-repl,motoko,subs=+macros]
+----
+func append<A>(xs : pass:[[]Apass:[]], ys : pass:[[]Apass:[]]) : pass:[[]Apass:[]]
+----
+
+Append the values of two input arrays
+
+[[sort]]
+== sort
+
+[source.no-repl,motoko,subs=+macros]
+----
+func sort<A>(xs : pass:[[]Apass:[]], cmp : (A, A) -> xref:Order.adoc#type.Order[Order.Order]) : pass:[[]Apass:[]]
+----
+
+Sorts the given array according to the `cmp` function.
+This is a _stable_ sort.
+
+```motoko
+import Array "mo:base/Array";
+import Nat "mo:base/Nat";
+let xs = [4, 2, 6, 1, 5];
+assert(Array.sort(xs, Nat.compare) == [1, 2, 4, 5, 6])
+```
+
+[[sortInPlace]]
+== sortInPlace
+
+[source.no-repl,motoko,subs=+macros]
+----
+func sortInPlace<A>(xs : pass:[[]var Apass:[]], cmp : (A, A) -> xref:Order.adoc#type.Order[Order.Order])
+----
+
+Sorts the given array in place according to the `cmp` function.
+This is a _stable_ sort.
+
+```motoko
+import Array "mo:base/Array";
+import Nat "mo:base/Nat";
+let xs : [var Nat] = [4, 2, 6, 1, 5];
+xs.sort(Nat.compare);
+assert(Array.freeze(xs) == [1, 2, 4, 5, 6])
+```
+
+[[chain]]
+== chain
+
+[source.no-repl,motoko,subs=+macros]
+----
+func chain<A, B>(xs : pass:[[]Apass:[]], f : A -> pass:[[]Bpass:[]]) : pass:[[]Bpass:[]]
+----
+
+Transform each array value into zero or more output values, appended in order
+
+[[filter]]
+== filter
+
+[source.no-repl,motoko,subs=+macros]
+----
+func filter<A>(xs : pass:[[]Apass:[]], f : A -> Bool) : pass:[[]Apass:[]]
+----
+
+Output array contains each array-value if and only if the predicate is true; ordering retained.
+
+[[mapFilter]]
+== mapFilter
+
+[source.no-repl,motoko,subs=+macros]
+----
+func mapFilter<A, B>(xs : pass:[[]Apass:[]], f : A -> ?B) : pass:[[]Bpass:[]]
+----
+
+Output array contains each transformed optional value; ordering retained.
+
+[[foldLeft]]
+== foldLeft
+
+[source.no-repl,motoko,subs=+macros]
+----
+func foldLeft<A, B>(xs : pass:[[]Apass:[]], initial : B, f : (B, A) -> B) : B
+----
+
+Aggregate and transform values into a single output value, by increasing indices.
+
+[[foldRight]]
+== foldRight
+
+[source.no-repl,motoko,subs=+macros]
+----
+func foldRight<A, B>(xs : pass:[[]Apass:[]], initial : B, f : (A, B) -> B) : B
+----
+
+Aggregate and transform values into a single output value, by decreasing indices.
+
+[[find]]
+== find
+
+[source.no-repl,motoko,subs=+macros]
+----
+func find<A>(xs : pass:[[]Apass:[]], f : A -> Bool) : ?A
+----
+
+Returns optional first value for which predicate is true
+
+[[freeze]]
+== freeze
+
+[source.no-repl,motoko,subs=+macros]
+----
+func freeze<A>(xs : pass:[[]var Apass:[]]) : pass:[[]Apass:[]]
+----
+
+Transform mutable array into immutable array
+
+[[flatten]]
+== flatten
+
+[source.no-repl,motoko,subs=+macros]
+----
+func flatten<A>(xs : pass:[[]pass:[[]Apass:[]]pass:[]]) : pass:[[]Apass:[]]
+----
+
+Transform an array of arrays into a single array, with retained array-value order.
+
+[[map]]
+== map
+
+[source.no-repl,motoko,subs=+macros]
+----
+func map<A, B>(xs : pass:[[]Apass:[]], f : A -> B) : pass:[[]Bpass:[]]
+----
+
+Transform each value using a function, with retained array-value order.
+
+[[mapEntries]]
+== mapEntries
+
+[source.no-repl,motoko,subs=+macros]
+----
+func mapEntries<A, B>(xs : pass:[[]Apass:[]], f : (A, Nat) -> B) : pass:[[]Bpass:[]]
+----
+
+Transform each entry (index-value pair) using a function.
+
+[[mapResult]]
+== mapResult
+
+[source.no-repl,motoko,subs=+macros]
+----
+func mapResult<A, R, E>(xs : pass:[[]Apass:[]], f : A -> xref:Result.adoc#type.Result[Result.Result]<R, E>) : xref:Result.adoc#type.Result[Result.Result]<pass:[[]Rpass:[]], E>
+----
+
+Maps a Result-returning function over an Array and returns either
+the first error or an array of successful values.
+
+```motoko
+import Array "mo:base/Array";
+import Result "mo:base/Result";
+import Int "mo:base/Int";
+func makeNatural(x : Int) : Result.Result<Nat, Text> =
+  if (x >= 0) {
+    #ok(Int.abs(x))
+  } else {
+    #err(Int.toText(x) # " is not a natural number.")
+  };
+
+assert(Array.mapResult<Int, Nat, Text>([0, 1, 2], makeNatural) == #ok([0, 1, 2]));
+assert(Array.mapResult([-1, 0, 1], makeNatural) == #err("-1 is not a natural number."));
+```
+
+[[make]]
+== make
+
+[source.no-repl,motoko,subs=+macros]
+----
+func make<A>(x : A) : pass:[[]Apass:[]]
+----
+
+Make an array from a single value.
+
+[[vals]]
+== vals
+
+[source.no-repl,motoko,subs=+macros]
+----
+func vals<A>(xs : pass:[[]Apass:[]]) : xref:IterType.adoc#type.Iter[I.Iter]<A>
+----
+
+Returns `xs.vals()`.
+
+[[keys]]
+== keys
+
+[source.no-repl,motoko,subs=+macros]
+----
+func keys<A>(xs : pass:[[]Apass:[]]) : xref:IterType.adoc#type.Iter[I.Iter]<Nat>
+----
+
+Returns `xs.keys()`.
+
+[[thaw]]
+== thaw
+
+[source.no-repl,motoko,subs=+macros]
+----
+func thaw<A>(xs : pass:[[]Apass:[]]) : pass:[[]var Apass:[]]
+----
+
+Transform an immutable array into a mutable array.
+
+[[init]]
+== init
+
+[source.no-repl,motoko,subs=+macros]
+----
+func init<A>(size : Nat, initVal : A) : pass:[[]var Apass:[]]
+----
+
+Initialize a mutable array with `size` copies of the initial value.
+
+[[tabulate]]
+== tabulate
+
+[source.no-repl,motoko,subs=+macros]
+----
+func tabulate<A>(size : Nat, gen : Nat -> A) : pass:[[]Apass:[]]
+----
+
+Initialize a mutable array of the given size, and use the `gen` function to produce the initial value for every index.
+
+[[tabulateVar]]
+== tabulateVar
+
+[source.no-repl,motoko,subs=+macros]
+----
+func tabulateVar<A>(size : Nat, gen : Nat -> A) : pass:[[]var Apass:[]]
+----
+
+Initialize a mutable array using a generation function
+
