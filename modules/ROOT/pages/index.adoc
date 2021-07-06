@@ -6,10 +6,12 @@
 :page-layout: landing
 
 ++++
-<script>
+
+<!-- <script>
 // Simulate HTTP Redirect to marketing /developers site
 window.location.replace("https://dfinity.org/developers");
-</script>
+</script> -->
+
 ++++
 
 ++++
